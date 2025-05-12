@@ -1,11 +1,11 @@
 import {
-  View, TextInput, StyleSheet, KeyboardAvoidingView,
-  Alert
+  View, TextInput, StyleSheet, Alert
 } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useState, useEffect } from 'react'
 import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 
+import KeyboardSafeView from '../../components/KeyboardAvoidingView'
 import CircleButton from '../../components/CircleButton'
 import Icon from '../../components/Icon'
 import { auth, db } from '../../config'
@@ -42,19 +42,20 @@ const Edit = ():React.JSX.Element => {
       })
   }, [])
   return (
-    <KeyboardAvoidingView behavior='height' style={styles.container}>
+    <KeyboardSafeView style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           multiline
           style={styles.input}
           value={bodyText}
           onChangeText={(text) => { setBodyText(text) }}
+          autoFocus
         />
       </View>
       <CircleButton onPress={() => { handlePress(id, bodyText) }}>
         <Icon name='check' size={40} color='#fff' />
       </CircleButton>
-    </KeyboardAvoidingView>
+    </KeyboardSafeView>
   )
 }
 
